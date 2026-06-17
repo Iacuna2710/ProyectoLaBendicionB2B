@@ -1,0 +1,32 @@
+@model Cliente
+<div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+<div class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" placeholder="Ej: Tech Parts CR">
+        <span asp-validation-for="Nombre" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Cedula" class="form-label"></label>
+        <input asp-for="Cedula" class="form-control" placeholder="Ej: 3-101-123456">
+        <span asp-validation-for="Cedula" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Telefono" class="form-label"></label>
+        <input asp-for="Telefono" class="form-control" placeholder="Ej: 2222-0001">
+        <span asp-validation-for="Telefono" class="text-danger small"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Correo" class="form-label"></label>
+        <div class="input-group">
+            <span class="input-group-text bg-transparent"><i class="bi bi-envelope"></i></span>
+            <input asp-for="Correo" class="form-control" type="email" placeholder="correo@empresa.cr">
+        </div>
+        <span asp-validation-for="Correo" class="text-danger small"></span>
+    </div>
+    <div class="col-12">
+        <label asp-for="Direccion" class="form-label"></label>
+        <input asp-for="Direccion" class="form-control" placeholder="Dirección completa">
+        <span asp-validation-for="Direccion" class="text-danger small"></span>
+    </div>
+</div>

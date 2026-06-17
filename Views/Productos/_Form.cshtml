@@ -1,0 +1,65 @@
+@model ProductoFormViewModel
+<div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+<div class="row g-3">
+    @if (!Model.Categorias.Any())
+    {
+        <div class="col-12">
+            <div class="alert alert-warning d-flex align-items-center gap-2 mb-0">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>No hay categorías. Crea una en <a asp-controller="Categorias" asp-action="Create">Categorías</a> primero.</span>
+            </div>
+        </div>
+    }
+    <div class="col-md-6">
+        <label asp-for="Producto.Nombre" class="form-label"></label>
+        <input asp-for="Producto.Nombre" class="form-control" placeholder="Ej: Laptop HP 15">
+        <span asp-validation-for="Producto.Nombre" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Producto.id_Categoria" class="form-label"></label>
+        <select asp-for="Producto.id_Categoria" asp-items="Model.Categorias" class="form-select">
+            <option value="">— Seleccionar —</option>
+        </select>
+        <span asp-validation-for="Producto.id_Categoria" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Producto.Precio" class="form-label"></label>
+        <div class="input-group">
+            <span class="input-group-text bg-transparent">₡</span>
+            <input asp-for="Producto.Precio" class="form-control" placeholder="0.00">
+        </div>
+        <span asp-validation-for="Producto.Precio" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Producto.ImpuestoPorc" class="form-label"></label>
+        <div class="input-group">
+            <input asp-for="Producto.ImpuestoPorc" class="form-control" placeholder="13">
+            <span class="input-group-text bg-transparent">%</span>
+        </div>
+        <span asp-validation-for="Producto.ImpuestoPorc" class="text-danger small"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Producto.Stock" class="form-label"></label>
+        <input asp-for="Producto.Stock" class="form-control" placeholder="0">
+        <span asp-validation-for="Producto.Stock" class="text-danger small"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="ImagenFile" class="form-label">
+            Imagen
+            @if (Model.Producto.id_Producto == 0) { <span class="text-danger">*</span> }
+        </label>
+        <input asp-for="ImagenFile" class="form-control" type="file" accept=".jpg,.jpeg,.png,.webp,.gif">
+        <span asp-validation-for="ImagenFile" class="text-danger small"></span>
+        <div class="form-text">JPG, PNG, WEBP o GIF · Máx. 2 MB</div>
+        @if (!string.IsNullOrEmpty(Model.Producto.Url_Imagen))
+        {
+            <img src="@Model.Producto.Url_Imagen" alt="" class="mt-2 rounded shadow-sm" style="max-height:70px;">
+        }
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <div class="form-check">
+            <input asp-for="Producto.Activo" class="form-check-input">
+            <label asp-for="Producto.Activo" class="form-check-label">Producto activo</label>
+        </div>
+    </div>
+</div>

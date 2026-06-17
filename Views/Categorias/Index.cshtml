@@ -1,0 +1,50 @@
+@model IEnumerable<Categoria>
+@{ ViewData["Title"] = "Categorías"; }
+
+<div class="page-header">
+    <div>
+        <h1>Categorías</h1>
+        <p class="text-muted mb-0">@Model.Count() categoría(s) registradas</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary rounded-pill">
+        <i class="bi bi-plus-lg me-1"></i> Nueva
+    </a>
+</div>
+
+<div class="card-modern">
+    <div class="table-responsive">
+        <table class="table table-modern">
+            <thead>
+                <tr>
+                    <th style="width:80px">#</th>
+                    <th>Nombre</th>
+                    <th class="text-end" style="width:180px">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-muted">@item.id_Categoria</td>
+                        <td class="fw-semibold">@item.Nombre</td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@item.id_Categoria" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Ver">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.id_Categoria" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.id_Categoria" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr><td colspan="3" class="text-center py-4 text-muted">No hay categorías registradas.</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

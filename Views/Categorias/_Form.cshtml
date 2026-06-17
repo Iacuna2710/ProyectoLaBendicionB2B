@@ -1,0 +1,9 @@
+@model Categoria
+<div asp-validation-summary="ModelOnly" class="alert alert-danger d-none"></div>
+<div class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" placeholder="Ej: Electrónica">
+        <span asp-validation-for="Nombre" class="text-danger small"></span>
+    </div>
+</div>

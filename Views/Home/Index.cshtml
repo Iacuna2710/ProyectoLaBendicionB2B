@@ -1,0 +1,63 @@
+@{ ViewData["Title"] = "Dashboard"; }
+
+<div class="page-header">
+    <div>
+        <h1>Dashboard</h1>
+        <p class="text-muted mb-0">Resumen general del sistema</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card bg-gradient-primary">
+            <div class="stat-number">@Model.TotalProductos</div>
+            <div class="stat-label">Productos registrados</div>
+            <i class="bi bi-box-fill stat-icon"></i>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card bg-gradient-success">
+            <div class="stat-number">@Model.TotalCategorias</div>
+            <div class="stat-label">Categorías</div>
+            <i class="bi bi-tag-fill stat-icon"></i>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card bg-gradient-warning">
+            <div class="stat-number">@Model.TotalClientes</div>
+            <div class="stat-label">Clientes</div>
+            <i class="bi bi-people-fill stat-icon"></i>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card bg-gradient-info">
+            <div class="stat-number">@Model.TotalPedidos</div>
+            <div class="stat-label">Pedidos</div>
+            <i class="bi bi-cart-fill stat-icon"></i>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-12">
+        <div class="card-modern p-4">
+            <h5 class="fw-bold mb-3">
+                <i class="bi bi-lightning-charge-fill text-primary me-2"></i>Acceso rápido
+            </h5>
+            <div class="d-flex gap-3 flex-wrap">
+                <a asp-controller="Productos" asp-action="Create" class="btn btn-primary rounded-pill">
+                    <i class="bi bi-plus-circle me-1"></i> Nuevo producto
+                </a>
+                <a asp-controller="Categorias" asp-action="Create" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-plus-circle me-1"></i> Nueva categoría
+                </a>
+                <a asp-controller="Clientes" asp-action="Create" class="btn btn-outline-primary rounded-pill">
+                    <i class="bi bi-plus-circle me-1"></i> Nuevo cliente
+                </a>
+                <a asp-controller="Productos" asp-action="Index" class="btn btn-outline-secondary rounded-pill">
+                    <i class="bi bi-box me-1"></i> Ver productos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

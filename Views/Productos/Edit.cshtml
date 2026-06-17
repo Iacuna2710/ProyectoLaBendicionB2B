@@ -1,0 +1,22 @@
+@model ProductoFormViewModel
+@{ ViewData["Title"] = "Editar producto"; }
+
+<div class="page-header">
+    <h1>Editar producto</h1>
+</div>
+<div class="card-modern p-4">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <input asp-for="Producto.id_Producto" type="hidden">
+        <partial name="_Form" model="Model" />
+        <hr class="my-4">
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary rounded-pill px-4">
+                <i class="bi bi-check-lg me-1"></i> Actualizar
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-x-lg me-1"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

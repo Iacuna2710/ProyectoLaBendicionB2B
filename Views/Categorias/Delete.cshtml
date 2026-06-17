@@ -1,0 +1,40 @@
+@model Categoria
+@{ ViewData["Title"] = "Eliminar categoría"; }
+
+<div class="page-header">
+    <h1 class="text-danger">Eliminar categoría</h1>
+</div>
+
+<div class="card-modern p-4">
+    <div class="text-center mb-4">
+        <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size:3rem;"></i>
+        <h5 class="mt-2">¿Eliminar <strong>@Model.Nombre</strong>?</h5>
+    </div>
+
+    @if (Model.Productos.Any())
+    {
+        <div class="alert alert-warning d-flex align-items-center gap-2">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>Tiene <strong>@Model.Productos.Count</strong> producto(s) asociado(s). No se puede eliminar.</span>
+        </div>
+        <div class="text-center">
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left me-1"></i> Volver
+            </a>
+        </div>
+    }
+    else
+    {
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="id_Categoria">
+            <div class="d-flex gap-2 justify-content-center">
+                <button type="submit" class="btn btn-danger rounded-pill px-4">
+                    <i class="bi bi-trash me-1"></i> Eliminar
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                    <i class="bi bi-x-lg me-1"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    }
+</div>
