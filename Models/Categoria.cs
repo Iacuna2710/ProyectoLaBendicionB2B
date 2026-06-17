@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Pedidos360.Models
+    //  clase modelo de categoria
 {
     public partial class Categoria
     {

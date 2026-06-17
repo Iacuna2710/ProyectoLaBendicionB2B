@@ -5,6 +5,7 @@ using Pedidos360.Models;
 using Pedidos360.ViewModels;
 
 namespace Pedidos360.Controllers
+// Controlador para gestionar los clientes del sistema
 {
     public class ClientesController : Controller
     {
@@ -20,7 +21,7 @@ namespace Pedidos360.Controllers
         {
             var query = _context.Clientes.AsQueryable();
 
-            // Búsqueda por nombre O cédula (igual que IX_Pacientes_Cedula en ClaseEF)
+            // Búsqueda por nombre O cédula 
             if (!string.IsNullOrWhiteSpace(filtroBusqueda))
                 query = query.Where(c =>
                     c.Nombre.Contains(filtroBusqueda) ||
@@ -74,7 +75,7 @@ namespace Pedidos360.Controllers
             if (!ModelState.IsValid)
                 return View(cliente);
 
-            // Verifica cédula duplicada
+            // Verifica si la cédula esta duplicada
             if (await _context.Clientes.AnyAsync(c => c.Cedula == cliente.Cedula))
             {
                 ModelState.AddModelError("Cedula", "Ya existe un cliente con esa cédula.");
@@ -117,7 +118,7 @@ namespace Pedidos360.Controllers
                 if (clienteDb is null)
                     return NotFound();
 
-                // Verifica cédula duplicada en otro cliente
+                // Verifica si la cédula esta duplicada en otro cliente
                 if (await _context.Clientes.AnyAsync(c => c.Cedula == cliente.Cedula && c.id_Cliente != id))
                 {
                     ModelState.AddModelError("Cedula", "Ya existe otro cliente con esa cédula.");

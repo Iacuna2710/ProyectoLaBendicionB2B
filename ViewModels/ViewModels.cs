@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Pedidos360.Models;
 
 namespace Pedidos360.ViewModels
+    
 {
     /// <summary>
     /// ViewModel para Create/Edit de Producto.

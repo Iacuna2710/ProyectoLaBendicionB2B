@@ -4,6 +4,7 @@ using Pedidos360.Data;
 using Pedidos360.Models;
 
 namespace Pedidos360.Controllers
+// Controlador para gestionar las categorías de productos
 {
     public class CategoriasController : Controller
     {

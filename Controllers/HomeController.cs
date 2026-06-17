@@ -6,6 +6,7 @@ using Pedidos360.ViewModels;
 using System.Diagnostics;
 
 namespace Pedidos360.Controllers
+// Controlador para la página de inicio y el dashboard principal
 {
     public class HomeController : Controller
     {

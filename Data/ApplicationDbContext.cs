@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pedidos360.Models;
 
 namespace Pedidos360.Data
+// Contexto de base de datos principal que incluye las entidades del sistema y la integración con Identity para la gestión de usuarios
 {
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

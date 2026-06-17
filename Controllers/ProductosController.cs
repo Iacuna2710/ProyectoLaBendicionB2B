@@ -6,6 +6,7 @@ using Pedidos360.Models;
 using Pedidos360.ViewModels;
 
 namespace Pedidos360.Controllers
+// Controlador para gestionar los productos del sistema
 {
     public class ProductosController : Controller
     {
@@ -85,7 +86,7 @@ namespace Pedidos360.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductoFormViewModel viewModel)
         {
-            // La imagen es obligatoria al crear
+            // La imagen es obligatoria al crear un producto
             if (viewModel.ImagenFile is null || viewModel.ImagenFile.Length == 0)
                 ModelState.AddModelError("ImagenFile", "La imagen es obligatoria al crear un producto.");
 
@@ -137,7 +138,7 @@ namespace Pedidos360.Controllers
                 productoDb.Stock               = viewModel.Producto.Stock;
                 productoDb.Activo              = viewModel.Producto.Activo;
 
-                // Solo reemplaza imagen si se sube una nueva
+                // La imagen se actualiza solo si se sube una nueva imaggen, de lo contrario se mantiene la existente
                 if (viewModel.ImagenFile is not null && viewModel.ImagenFile.Length > 0)
                 {
                     BorrarImagen(productoDb.Url_Imagen);
@@ -181,7 +182,7 @@ namespace Pedidos360.Controllers
             var producto = await _context.Productos.FindAsync(id);
             if (producto is not null)
             {
-                // Si tiene pedidos se desactiva (soft delete), igual que Paciente en ClaseEF
+                // Si tiene pedidos se desactiva con soft delete
                 bool tieneDetalles = await _context.PedidoDetalles.AnyAsync(d => d.id_Producto == id);
                 if (tieneDetalles)
                 {
@@ -202,8 +203,7 @@ namespace Pedidos360.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ── Helper: construye ViewModel con categorías para el dropdown ───────
-        // Igual que BuildViewModelAsync en ServiciosController de ClaseEF
+        // ── Helper: construye el view model con lista de categorías ─────────────
         private async Task<ProductoFormViewModel> BuildViewModelAsync(Producto producto)
         {
             return new ProductoFormViewModel
@@ -243,8 +243,8 @@ namespace Pedidos360.Controllers
 
             return $"/uploads/productos/{nombreArchivo}";
         }
+        // ── Helper: borra imagen del servidor ─────────────────────────────────────
 
-        // ── Helper: borra imagen del disco ────────────────────────────────────
         private void BorrarImagen(string? imagenUrl)
         {
             if (string.IsNullOrEmpty(imagenUrl)) return;

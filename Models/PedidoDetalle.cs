@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pedidos360.Models
+// clase modelo de detalle de pedido
 {
     public partial class PedidoDetalle
     {
