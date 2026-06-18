@@ -5,11 +5,11 @@ using Pedidos360.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ── 1. Base de datos (mismo patrón que ClaseEF del profesor) ──────────────────
+// ── 1. Base de datos ──────────────────
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Pedidos360Db")));
 
-// ── 2. Identity (usuarios + roles) ────────────────────────────────────────────
+// ── 2. Identity  ──────────────────
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
@@ -44,13 +44,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthentication(); // debe ir ANTES de UseAuthorization
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // necesario para páginas de Identity (Login, Register)
+app.MapRazorPages(); 
 
 app.Run();

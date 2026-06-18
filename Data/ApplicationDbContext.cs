@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Pedidos360.Models;
 
 namespace Pedidos360.Data
-// Contexto de base de datos principal que incluye las entidades del sistema y la integración con Identity para la gestión de usuarios
+    
+// clase que conecta con el ORM Entity Framework Core con  la BD de SQL Server y define las tablas de la BD
+
 {
     public partial class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -21,7 +23,7 @@ namespace Pedidos360.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Mapeo de IdentityUser a Usuarios según Diagrama ER
+            // tablas de la bd para usuarios y roles de Identity
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
                 entity.ToTable("Usuarios");
