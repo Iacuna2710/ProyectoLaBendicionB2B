@@ -34,7 +34,7 @@ namespace MacrobioticaLaBendicion.Models
         public string Direccion { get; set; } = null!;
 
 
-        // Navegación
+        // Relación uno a muchos con Pedido
         public ICollection<Pedido> Pedidos { get; set; } = new List<Pedido>();
     }
 }

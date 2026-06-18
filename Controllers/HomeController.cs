@@ -6,7 +6,7 @@ using MacrobioticaLaBendicion.ViewModels;
 using System.Diagnostics;
 
 namespace MacrobioticaLaBendicion.Controllers
-// Controlador para la página de inicio y el dashboard principal
+// Controlador para la página de inicio y el dashboard principal 
 {
     public class HomeController : Controller
     {

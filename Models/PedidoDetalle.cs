@@ -37,7 +37,7 @@ namespace MacrobioticaLaBendicion.Models
         [Display(Name = "Total Línea")]
         public decimal Total_Linea { get; set; }
 
-        // Navegación
+        // Relación muchos a uno con Pedido y Producto
         public Pedido? Pedido { get; set; }
         public Producto? Producto { get; set; }
     }

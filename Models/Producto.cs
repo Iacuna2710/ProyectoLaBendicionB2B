@@ -39,9 +39,9 @@ namespace MacrobioticaLaBendicion.Models
         [Display(Name = "Activo")]
         public bool Activo { get; set; } = true;
 
-        
 
-        // Navegación
+
+        // Relación muchos a uno con Categoria y uno a muchos con PedidoDetalle
         public Categoria? Categoria { get; set; }
         public ICollection<PedidoDetalle> PedidoDetalles { get; set; } = new List<PedidoDetalle>();
     }

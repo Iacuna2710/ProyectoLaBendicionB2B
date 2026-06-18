@@ -4,7 +4,7 @@ using MacrobioticaLaBendicion.Data;
 using MacrobioticaLaBendicion.Models;
 
 namespace MacrobioticaLaBendicion.Controllers
-// Controlador para gestionar las categorías de productos
+// Controlador para el CRUD de las categorías de productos
 {
     public class CategoriasController : Controller
     {

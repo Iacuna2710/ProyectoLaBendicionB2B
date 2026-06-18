@@ -4,6 +4,7 @@ using MacrobioticaLaBendicion.Models;
 namespace MacrobioticaLaBendicion.ViewModels
     
 {
+    // ViewModel para el formulario de creación y edición de productos
     public class ProductoFormViewModel
     {
         public Producto Producto { get; set; } = new();
@@ -11,7 +12,7 @@ namespace MacrobioticaLaBendicion.ViewModels
         public IFormFile? ImagenFile { get; set; }
     }
 
- 
+    // ViewModel para la vista de listado de productos con filtros y paginación
     public class ProductoIndexViewModel
     {
         public IEnumerable<Producto> Productos { get; set; } = [];
@@ -24,7 +25,7 @@ namespace MacrobioticaLaBendicion.ViewModels
         public const int TamanoPagina = 8;
     }
 
-
+    // ViewModel para la vista de listado de clientes con filtros y paginación
     public class ClienteIndexViewModel
     {
         public IEnumerable<Cliente> Clientes { get; set; } = [];
@@ -35,7 +36,7 @@ namespace MacrobioticaLaBendicion.ViewModels
         public const int TamanoPagina = 10;
     }
 
-
+    // viewmodel para el dashboard de inicio con estadísticas generales del sistema
     public class HomeDashboardViewModel
     {
         public int TotalProductos { get; set; }

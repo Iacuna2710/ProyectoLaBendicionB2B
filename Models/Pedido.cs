@@ -33,7 +33,7 @@ namespace MacrobioticaLaBendicion.Models
         [Display(Name = "Estado")]
         public string Estado { get; set; } = "Pendiente";
 
-        // Navegación
+        // Relación muchos a uno con Cliente y uno a muchos con PedidoDetalle
         public Cliente? Cliente { get; set; }
         public ICollection<PedidoDetalle> Detalles { get; set; } = new List<PedidoDetalle>();
     }

@@ -6,7 +6,7 @@ using MacrobioticaLaBendicion.Models;
 using MacrobioticaLaBendicion.ViewModels;
 
 namespace MacrobioticaLaBendicion.Controllers
-// Controlador para gestionar los productos del sistema
+// Controlador para el CRUD de los productos del sistema
 {
     public class ProductosController : Controller
     {

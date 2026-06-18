@@ -5,7 +5,7 @@ using MacrobioticaLaBendicion.Models;
 using MacrobioticaLaBendicion.ViewModels;
 
 namespace MacrobioticaLaBendicion.Controllers
-// Controlador para gestionar los clientes del sistema
+// Controlador para el CRUD de los clientes del sistema
 {
     public class ClientesController : Controller
     {

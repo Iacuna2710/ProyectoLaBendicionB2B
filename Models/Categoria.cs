@@ -12,7 +12,7 @@ namespace MacrobioticaLaBendicion.Models
         [Display(Name = "Categoría")]
         public string Nombre { get; set; } = null!;
 
-        // Navegación
+        // Relación uno a muchos con Producto
         public ICollection<Producto> Productos { get; set; } = new List<Producto>();
     }
 }
