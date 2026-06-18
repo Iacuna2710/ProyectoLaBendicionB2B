@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Pedidos360.Migrations
+namespace MacrobioticaLaBendicion.Migrations
 // Migración inicial que crea las tablas principales del sistema, incluyendo la integración con Identity para la gestión de usuarios y roles, así como las entidades de negocio como Clientes, Productos, Pedidos y Categorías
 {
     /// <inheritdoc />

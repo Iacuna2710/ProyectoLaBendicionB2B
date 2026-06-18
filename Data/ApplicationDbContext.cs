@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Pedidos360.Models;
+using MacrobioticaLaBendicion.Models;
 
-namespace Pedidos360.Data
+namespace MacrobioticaLaBendicion.Data
     
 // clase que conecta con el ORM Entity Framework Core con  la BD de SQL Server y define las tablas de la BD
 

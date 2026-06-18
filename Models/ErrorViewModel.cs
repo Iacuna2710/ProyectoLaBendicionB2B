@@ -1,4 +1,4 @@
-namespace Pedidos360.Models
+namespace MacrobioticaLaBendicion.Models
 {
     public class ErrorViewModel
     // clase modelo para el manejo de errores en la aplicación

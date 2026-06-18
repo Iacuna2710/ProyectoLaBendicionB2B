@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Pedidos360.Models;
+using MacrobioticaLaBendicion.Models;
 
-namespace Pedidos360.ViewModels
+namespace MacrobioticaLaBendicion.ViewModels
     
 {
     public class ProductoFormViewModel

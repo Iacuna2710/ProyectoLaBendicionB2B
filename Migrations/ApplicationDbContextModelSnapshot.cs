@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Pedidos360.Data;
+using MacrobioticaLaBendicion.Data;
 
 #nullable disable
-namespace Pedidos360.Migrations
-    
+
+namespace MacrobioticaLaBendicion.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -159,7 +159,7 @@ namespace Pedidos360.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.ApplicationUser", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)")
@@ -229,7 +229,7 @@ namespace Pedidos360.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Categoria", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Categoria", b =>
                 {
                     b.Property<int>("id_Categoria")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace Pedidos360.Migrations
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Cliente", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Cliente", b =>
                 {
                     b.Property<int>("id_Cliente")
                         .ValueGeneratedOnAdd()
@@ -293,7 +293,7 @@ namespace Pedidos360.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Pedido", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Pedido", b =>
                 {
                     b.Property<int>("id_Pedido")
                         .ValueGeneratedOnAdd()
@@ -337,7 +337,7 @@ namespace Pedidos360.Migrations
                     b.ToTable("Pedidos");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.PedidoDetalle", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.PedidoDetalle", b =>
                 {
                     b.Property<int>("id_detalleP")
                         .ValueGeneratedOnAdd()
@@ -376,7 +376,7 @@ namespace Pedidos360.Migrations
                     b.ToTable("PedidoDetalles");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Producto", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Producto", b =>
                 {
                     b.Property<int>("id_Producto")
                         .ValueGeneratedOnAdd()
@@ -428,7 +428,7 @@ namespace Pedidos360.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Pedidos360.Models.ApplicationUser", null)
+                    b.HasOne("MacrobioticaLaBendicion.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -437,7 +437,7 @@ namespace Pedidos360.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Pedidos360.Models.ApplicationUser", null)
+                    b.HasOne("MacrobioticaLaBendicion.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -452,7 +452,7 @@ namespace Pedidos360.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Pedidos360.Models.ApplicationUser", null)
+                    b.HasOne("MacrobioticaLaBendicion.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -461,22 +461,22 @@ namespace Pedidos360.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Pedidos360.Models.ApplicationUser", null)
+                    b.HasOne("MacrobioticaLaBendicion.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Pedido", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Pedido", b =>
                 {
-                    b.HasOne("Pedidos360.Models.Cliente", "Cliente")
+                    b.HasOne("MacrobioticaLaBendicion.Models.Cliente", "Cliente")
                         .WithMany("Pedidos")
                         .HasForeignKey("id_Cliente")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Pedidos360.Models.ApplicationUser", null)
+                    b.HasOne("MacrobioticaLaBendicion.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("id_Usuario")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -485,15 +485,15 @@ namespace Pedidos360.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.PedidoDetalle", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.PedidoDetalle", b =>
                 {
-                    b.HasOne("Pedidos360.Models.Pedido", "Pedido")
+                    b.HasOne("MacrobioticaLaBendicion.Models.Pedido", "Pedido")
                         .WithMany("Detalles")
                         .HasForeignKey("id_Pedido")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Pedidos360.Models.Producto", "Producto")
+                    b.HasOne("MacrobioticaLaBendicion.Models.Producto", "Producto")
                         .WithMany("PedidoDetalles")
                         .HasForeignKey("id_Producto")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -504,9 +504,9 @@ namespace Pedidos360.Migrations
                     b.Navigation("Producto");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Producto", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Producto", b =>
                 {
-                    b.HasOne("Pedidos360.Models.Categoria", "Categoria")
+                    b.HasOne("MacrobioticaLaBendicion.Models.Categoria", "Categoria")
                         .WithMany("Productos")
                         .HasForeignKey("id_Categoria")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -515,22 +515,22 @@ namespace Pedidos360.Migrations
                     b.Navigation("Categoria");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Categoria", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Categoria", b =>
                 {
                     b.Navigation("Productos");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Cliente", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Cliente", b =>
                 {
                     b.Navigation("Pedidos");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Pedido", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Pedido", b =>
                 {
                     b.Navigation("Detalles");
                 });
 
-            modelBuilder.Entity("Pedidos360.Models.Producto", b =>
+            modelBuilder.Entity("MacrobioticaLaBendicion.Models.Producto", b =>
                 {
                     b.Navigation("PedidoDetalles");
                 });

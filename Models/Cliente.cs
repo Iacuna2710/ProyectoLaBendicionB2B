@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Pedidos360.Models
+namespace MacrobioticaLaBendicion.Models
 // clase modelo de cliente  
 {
     public partial class Cliente

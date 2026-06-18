@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pedidos360.Data;
-using Pedidos360.Models;
-using Pedidos360.ViewModels;
+using MacrobioticaLaBendicion.Data;
+using MacrobioticaLaBendicion.Models;
+using MacrobioticaLaBendicion.ViewModels;
 using System.Diagnostics;
 
-namespace Pedidos360.Controllers
+namespace MacrobioticaLaBendicion.Controllers
 // Controlador para la página de inicio y el dashboard principal
 {
     public class HomeController : Controller
@@ -27,7 +27,7 @@ namespace Pedidos360.Controllers
                 TotalClientes   = await _context.Clientes.CountAsync(),
                 TotalPedidos    = await _context.Pedidos.CountAsync(),
                 TotalCategorias = await _context.Categorias.CountAsync(),
-                ConnectionString = _configuration.GetConnectionString("Pedidos360Db") ?? "—"
+                ConnectionString = _configuration.GetConnectionString("MacrobioticaDb") ?? "—"
             };
             return View(vm);
         }

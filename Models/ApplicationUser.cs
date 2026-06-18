@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Pedidos360.Models
+namespace MacrobioticaLaBendicion.Models
     // clase modelo para el manejo e roles en el sistema
 {
     public class ApplicationUser : IdentityUser

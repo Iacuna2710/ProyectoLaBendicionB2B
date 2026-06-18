@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
-using Pedidos360.Models;
+using MacrobioticaLaBendicion.Models;
 
-namespace Pedidos360.Data
+namespace MacrobioticaLaBendicion.Data
 // Clase encargada de sembrar datos iniciales en la base de datos, incluyendo roles, usuarios, categorías, productos y clientes de prueba para facilitar el desarrollo y las pruebas del sistema
 {
     public static class DbSeeder

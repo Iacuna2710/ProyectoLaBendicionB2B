@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Pedidos360.Data;
-using Pedidos360.Models;
+using MacrobioticaLaBendicion.Data;
+using MacrobioticaLaBendicion.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ── 1. Base de datos ──────────────────
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Pedidos360Db")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MacrobioticaDb")));
 
 // ── 2. Identity  ──────────────────
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>

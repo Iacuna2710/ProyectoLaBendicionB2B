@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pedidos360.Data;
-using Pedidos360.Models;
+using MacrobioticaLaBendicion.Data;
+using MacrobioticaLaBendicion.Models;
 
-namespace Pedidos360.Controllers
+namespace MacrobioticaLaBendicion.Controllers
 // Controlador para gestionar las categorías de productos
 {
     public class CategoriasController : Controller

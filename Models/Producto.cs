@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pedidos360.Models
+namespace MacrobioticaLaBendicion.Models
 // clase modelo de producto
 {
     public partial class Producto
