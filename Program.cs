@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
 using MacrobioticaLaBendicion.Models;
+using MacrobioticaLaBendicion.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// ── MVC ────────────────────────────────────────────────────────────────────
+// ── MVC + servicios de dominio ──────────────────────────────────────────────
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<CalculoPedidoService>();
 
 var app = builder.Build();
 

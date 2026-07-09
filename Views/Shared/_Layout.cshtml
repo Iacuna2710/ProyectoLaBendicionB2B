@@ -36,6 +36,10 @@
                     <i class="bi bi-people-fill"></i>
                     <span>Clientes</span>
                 </a>
+                <a asp-controller="Pedido" asp-action="Index" class="sidebar-link@(ViewContext.RouteData.Values["controller"]?.ToString() == "Pedido" ? " active" : "")">
+                    <i class="bi bi-cart-check-fill"></i>
+                    <span>Pedidos</span>
+                </a>
             </nav>
             <div class="sidebar-footer">
                 <button class="btn btn-sm btn-outline-secondary w-100" id="themeToggle">
@@ -54,16 +58,7 @@
                     <span>@ViewData["Title"]</span>
                 </div>
                 <div class="ms-auto d-flex align-items-center gap-3">
-                    <div class="dropdown">
-                        <button class="btn btn-link text-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle fs-5"></i>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                            <li><span class="dropdown-item-text small text-muted">admin@labendicion.com</span></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
-                        </ul>
-                    </div>
+                    <partial name="_LoginPartial" />
                 </div>
             </header>
             <div class="content">

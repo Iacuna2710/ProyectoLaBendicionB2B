@@ -1,0 +1,60 @@
+@model Pedido
+@{ ViewData["Title"] = $"Pedido #{Model.id_Pedido}"; }
+
+<div class="page-header">
+    <div>
+        <h1>Pedido #@Model.id_Pedido</h1>
+        <p class="text-muted mb-0">
+            Cliente: <strong>@Model.Cliente?.Nombre</strong> &middot;
+            @Model.Fecha.ToString("dd/MM/yyyy HH:mm") &middot;
+            <span class="badge bg-success">@Model.Estado</span>
+        </p>
+    </div>
+    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-arrow-left me-1"></i> Volver
+    </a>
+</div>
+
+<div class="card-modern">
+    <div class="table-responsive">
+        <table class="table table-modern align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio unit.</th>
+                    <th>Descuento %</th>
+                    <th>Impuesto %</th>
+                    <th>Total línea</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model.Detalles)
+                {
+                    <tr>
+                        <td>@d.Producto?.Nombre</td>
+                        <td>@d.Cantidad</td>
+                        <td>@d.PrecioUnitario.ToString("N2")</td>
+                        <td>@d.Descuento %</td>
+                        <td>@d.Porcentaje_Imp %</td>
+                        <td>₡@d.Total_Linea.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end gap-4 p-3 border-top">
+        <div class="text-end">
+            <div class="small text-muted">Subtotal</div>
+            <div class="fw-semibold">₡@Model.Subtotal.ToString("N2")</div>
+        </div>
+        <div class="text-end">
+            <div class="small text-muted">Impuestos</div>
+            <div class="fw-semibold">₡@Model.Impuestos.ToString("N2")</div>
+        </div>
+        <div class="text-end">
+            <div class="small text-muted">Total</div>
+            <div class="fs-5 fw-bold text-success">₡@Model.Total.ToString("N2")</div>
+        </div>
+    </div>
+</div>
