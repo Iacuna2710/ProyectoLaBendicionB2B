@@ -23,9 +23,9 @@ namespace MacrobioticaLaBendicion.Controllers
         {
             var vm = new HomeDashboardViewModel
             {
-                TotalProductos  = await _context.Productos.CountAsync(),
-                TotalClientes   = await _context.Clientes.CountAsync(),
-                TotalPedidos    = await _context.Pedidos.CountAsync(),
+                TotalProductos = await _context.Productos.CountAsync(),
+                TotalClientes = await _context.Clientes.CountAsync(),
+                TotalPedidos = await _context.Pedidos.CountAsync(),
                 TotalCategorias = await _context.Categorias.CountAsync(),
                 ConnectionString = _configuration.GetConnectionString("MacrobioticaDb") ?? "—"
             };
@@ -36,6 +36,24 @@ namespace MacrobioticaLaBendicion.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // Punto de entrada al que UseStatusCodePagesWithReExecute redirige
+        // cuando el servidor responde con un código de error (404, 403, etc.)
+        // Nota: se llama "ManejarCodigoEstado" (y no "StatusCode") para no
+        // chocar con el método StatusCode() que Controller ya trae incorporado.
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Route("Home/StatusCode/{code:int}")]
+        public IActionResult ManejarCodigoEstado(int code)
+        {
+            if (code == 404)
+            {
+                Response.StatusCode = 404;
+                return View("NotFound");
+            }
+
+            Response.StatusCode = code;
+            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

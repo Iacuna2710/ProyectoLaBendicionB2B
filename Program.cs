@@ -14,9 +14,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
-    options.Password.RequireDigit     = true;
+    options.Password.RequireDigit = true;
     options.Password.RequireUppercase = true;
-    options.Password.RequiredLength   = 8;
+    options.Password.RequiredLength = 8;
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -41,17 +41,21 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// Captura códigos de error (404, 403, etc.) y los re-ejecuta contra
+// Home/StatusCode en vez de mostrar la pantalla en blanco por defecto.
+app.UseStatusCodePagesWithReExecute("/Home/StatusCode/{0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthentication(); 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); 
+app.MapRazorPages();
 
 app.Run();
