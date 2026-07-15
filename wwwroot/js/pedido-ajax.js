@@ -144,7 +144,9 @@
             return;
         }
 
-        btnConfirmar.disabled = false;
+        // El botón se habilita solo cuando recalcular() confirme totales y stock
+        // (evita enviar el formulario con los inputs ocultos todavía sin actualizar).
+        btnConfirmar.disabled = true;
 
         lineas.forEach(l => {
             const fila = document.createElement("tr");

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
@@ -6,7 +7,7 @@ using MacrobioticaLaBendicion.ViewModels;
 using System.Diagnostics;
 
 namespace MacrobioticaLaBendicion.Controllers
-// Controlador para la página de inicio y el dashboard principal 
+// Controlador para la página de inicio y el dashboard principal
 {
     public class HomeController : Controller
     {
@@ -19,6 +20,9 @@ namespace MacrobioticaLaBendicion.Controllers
             _configuration = configuration;
         }
 
+        // El dashboard muestra estadísticas del negocio: requiere sesión iniciada
+        // (Error y ManejarCodigoEstado quedan libres para usuarios anónimos)
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var vm = new HomeDashboardViewModel

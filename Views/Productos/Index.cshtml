@@ -6,9 +6,12 @@
         <h1>Productos</h1>
         <p class="text-muted mb-0">@Model.TotalItems productos</p>
     </div>
-    <a asp-action="Create" class="btn btn-primary rounded-pill">
-        <i class="bi bi-plus-lg me-1"></i> Nuevo
-    </a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Create" class="btn btn-primary rounded-pill">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo
+        </a>
+    }
 </div>
 
 <div class="card-modern mb-4 p-3">
@@ -95,12 +98,18 @@
                             <a asp-action="Details" asp-route-id="@item.id_Producto" class="btn btn-sm btn-outline-secondary" data-bs-toggle="tooltip" title="Ver">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a asp-action="Edit" asp-route-id="@item.id_Producto" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Editar">
-                                <i class="bi bi-pencil"></i>
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.id_Producto" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Eliminar">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Operaciones"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.id_Producto" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.id_Producto" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
                         </td>
                     </tr>
                 }
