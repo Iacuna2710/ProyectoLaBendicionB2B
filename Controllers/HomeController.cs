@@ -23,9 +23,9 @@ namespace MacrobioticaLaBendicion.Controllers
         {
             var vm = new HomeDashboardViewModel
             {
-                TotalProductos  = await _context.Productos.CountAsync(),
-                TotalClientes   = await _context.Clientes.CountAsync(),
-                TotalPedidos    = await _context.Pedidos.CountAsync(),
+                TotalProductos = await _context.Productos.CountAsync(),
+                TotalClientes = await _context.Clientes.CountAsync(),
+                TotalPedidos = await _context.Pedidos.CountAsync(),
                 TotalCategorias = await _context.Categorias.CountAsync(),
                 ConnectionString = _configuration.GetConnectionString("MacrobioticaDb") ?? "—"
             };
