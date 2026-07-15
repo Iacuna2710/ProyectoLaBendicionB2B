@@ -27,11 +27,12 @@ builder.Services.AddScoped<CalculoPedidoService>();
 
 var app = builder.Build();
 
-// ── Aplica migraciones al arrancar ─────────────────────────────────────────
+// ── Aplica migraciones y crea los roles (Admin/Ventas/Operaciones) al arrancar ─
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
+    await SeedData.InicializarAsync(scope.ServiceProvider);
 }
 
 // ── Middleware pipeline ────────────────────────────────────────────────────

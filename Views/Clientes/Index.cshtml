@@ -58,9 +58,12 @@
                             <a asp-action="Edit" asp-route-id="@item.id_Cliente" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a asp-action="Delete" asp-route-id="@item.id_Cliente" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Eliminar">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.id_Cliente" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            }
                         </td>
                     </tr>
                 }

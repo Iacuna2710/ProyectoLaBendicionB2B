@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
@@ -6,6 +7,7 @@ using MacrobioticaLaBendicion.Models;
 namespace MacrobioticaLaBendicion.Controllers
 // Controlador para el CRUD de las categorías de productos
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
