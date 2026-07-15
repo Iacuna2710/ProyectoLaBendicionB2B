@@ -27,11 +27,12 @@ builder.Services.AddScoped<CalculoPedidoService>();
 
 var app = builder.Build();
 
-// ── Aplica migraciones al arrancar ─────────────────────────────────────────
+// ── Aplica migraciones y crea los roles (Admin/Ventas/Operaciones) al arrancar ─
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
+    await SeedData.InicializarAsync(scope.ServiceProvider);
 }
 
 // ── Middleware pipeline ────────────────────────────────────────────────────
@@ -40,6 +41,10 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
+// Captura códigos de error (404, 403, etc.) y los re-ejecuta contra
+// Home/StatusCode en vez de mostrar la pantalla en blanco por defecto.
+app.UseStatusCodePagesWithReExecute("/Home/StatusCode/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

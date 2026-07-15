@@ -1,0 +1,60 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Crear cuenta";
+    Layout = "_LayoutAuth";
+}
+
+<div class="card-modern auth-card">
+    <div class="auth-icon-circle">
+        <i class="bi bi-person-plus"></i>
+    </div>
+    <h2 class="auth-title">Crear cuenta</h2>
+    <p class="auth-subtitle">Regístrate para acceder al sistema</p>
+
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email"><i class="bi bi-envelope me-1"></i> Correo </label>
+                <span asp-validation-for="Input.Email" class="text-danger small"></span>
+            </div>
+            <div class="form-floating mb-3 password-wrapper">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="contraseña" />
+                <label asp-for="Input.Password"><i class="bi bi-lock me-1"></i> Contraseña </label>
+                <button type="button" class="password-toggle-btn" tabindex="-1" aria-label="Mostrar contraseña">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <span asp-validation-for="Input.Password" class="text-danger small"></span>
+            </div>
+            <div class="form-floating mb-3 password-wrapper">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="confirmar contraseña" />
+                <label asp-for="Input.ConfirmPassword"><i class="bi bi-lock-fill me-1"></i> Confirmar contraseña </label>
+                <button type="button" class="password-toggle-btn" tabindex="-1" aria-label="Mostrar contraseña">
+                    <i class="bi bi-eye"></i>
+                </button>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <select asp-for="Input.Rol" asp-items="Model.RolesDisponibles" class="form-select">
+                    <option value="">-- Seleccione un rol --</option>
+                </select>
+                <label asp-for="Input.Rol"><i class="bi bi-briefcase me-1"></i>Rol</label>
+                <span asp-validation-for="Input.Rol" class="text-danger small"></span>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-primary rounded-pill">
+                <i class="bi bi-person-plus me-1"></i>Registrar
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            ¿Ya tienes cuenta?
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Inicia sesión</a>
+        </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

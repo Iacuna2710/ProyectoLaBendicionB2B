@@ -6,8 +6,13 @@
 <div class="d-flex align-items-center gap-2">
 @if (SignInManager.IsSignedIn(User))
 {
+    var roles = await UserManager.GetRolesAsync((await UserManager.GetUserAsync(User))!);
     <span class="text-dark small">
-        <i class="bi bi-person-circle me-1"></i>Hola, @UserManager.GetUserName(User)!
+        <i class="bi bi-person-circle me-1"></i> @UserManager.GetUserName(User)
+        @if (roles.Count > 0)
+        {
+            <span class="badge bg-light text-dark border ms-1">@string.Join(", ", roles)</span>
+        }
     </span>
     <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
         <button id="logout" type="submit" class="btn btn-sm btn-outline-secondary rounded-pill">

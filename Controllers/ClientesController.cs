@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
@@ -7,6 +8,7 @@ using MacrobioticaLaBendicion.ViewModels;
 namespace MacrobioticaLaBendicion.Controllers
 // Controlador para el CRUD de los clientes del sistema
 {
+    [Authorize(Roles = "Admin,Ventas")]
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -146,6 +148,7 @@ namespace MacrobioticaLaBendicion.Controllers
         }
 
         // GET: Clientes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null)
@@ -161,6 +164,7 @@ namespace MacrobioticaLaBendicion.Controllers
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);

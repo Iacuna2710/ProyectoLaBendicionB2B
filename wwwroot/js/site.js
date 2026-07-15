@@ -35,4 +35,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
         new bootstrap.Tooltip(el);
     });
+
+    // Mostrar/ocultar contraseña en Login y Registro: el ícono solo aparece
+    // mientras el campo tiene texto escrito.
+    document.querySelectorAll('.password-wrapper').forEach(function (wrapper) {
+        const input = wrapper.querySelector('input');
+        const btn   = wrapper.querySelector('.password-toggle-btn');
+        if (!input || !btn) return;
+
+        const icon = btn.querySelector('i');
+
+        input.addEventListener('input', function () {
+            btn.style.display = input.value.length > 0 ? 'block' : 'none';
+        });
+
+        btn.addEventListener('click', function () {
+            const mostrando = input.type === 'text';
+            input.type = mostrando ? 'password' : 'text';
+            icon.className = mostrando ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+    });
 });

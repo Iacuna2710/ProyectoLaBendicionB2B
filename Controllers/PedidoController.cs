@@ -13,7 +13,7 @@ namespace MacrobioticaLaBendicion.Controllers
 // Controlador para crear y consultar pedidos: cálculo de totales en vivo,
 // descuento de stock y persistencia de auditoría (usuario/fecha/totales)
 {
-    [Authorize] // requiere usuario autenticado: id_Usuario es obligatorio en el pedido
+    [Authorize(Roles = "Admin,Ventas,Operaciones")] // ver pedidos: los 3 roles
     public class PedidoController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -70,6 +70,7 @@ namespace MacrobioticaLaBendicion.Controllers
         }
 
         // GET: Pedido/Create
+        [Authorize(Roles = "Admin,Ventas")]
         public async Task<IActionResult> Create()
         {
             return View(await BuildFormAsync());
@@ -78,6 +79,7 @@ namespace MacrobioticaLaBendicion.Controllers
         // POST: Pedido/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Ventas")]
         public async Task<IActionResult> Create(PedidoFormViewModel viewModel)
         {
             if (viewModel.id_Cliente <= 0)

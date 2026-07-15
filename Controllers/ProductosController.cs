@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using MacrobioticaLaBendicion.ViewModels;
 namespace MacrobioticaLaBendicion.Controllers
 // Controlador para el CRUD de los productos del sistema
 {
+    [Authorize(Roles = "Admin,Ventas,Operaciones")]
     public class ProductosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -76,6 +78,7 @@ namespace MacrobioticaLaBendicion.Controllers
         }
 
         // GET: Productos/Create
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create()
         {
             return View(await BuildViewModelAsync(new Producto { Activo = true, ImpuestoPorc = 13 }));
@@ -84,6 +87,7 @@ namespace MacrobioticaLaBendicion.Controllers
         // POST: Productos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(ProductoFormViewModel viewModel)
         {
             // La imagen es obligatoria al crear un producto
@@ -102,6 +106,7 @@ namespace MacrobioticaLaBendicion.Controllers
         }
 
         // GET: Productos/Edit/5
+        [Authorize(Roles = "Admin,Operaciones")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id is null)
@@ -117,6 +122,7 @@ namespace MacrobioticaLaBendicion.Controllers
         // POST: Productos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Operaciones")]
         public async Task<IActionResult> Edit(int id, ProductoFormViewModel viewModel)
         {
             if (id != viewModel.Producto.id_Producto)
@@ -160,6 +166,7 @@ namespace MacrobioticaLaBendicion.Controllers
         }
 
         // GET: Productos/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null)
@@ -177,6 +184,7 @@ namespace MacrobioticaLaBendicion.Controllers
         // POST: Productos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
