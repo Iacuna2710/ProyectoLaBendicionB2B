@@ -141,10 +141,10 @@ Ambos requieren usuario autenticado (`[Authorize]`).
 
 ## 👨‍💻 Equipo — Grupo 4
 
-- Isaac Acuña
-- Pablo Castillo
-- Fabricio Quesada
-- Marcelo Quevedo
-- Daniel Valverde
+- Isaac Acuña León
+- Pablo Castillo Zuñiga
+- Fabricio Jose Quesada Araya
+- Marcelo Quevedo Ramirez
+- Daniel Valverde Duran
 
 **Curso:** SC-601 Programación Avanzada
