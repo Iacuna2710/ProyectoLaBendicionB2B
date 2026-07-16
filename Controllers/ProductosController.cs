@@ -101,6 +101,10 @@ namespace MacrobioticaLaBendicion.Controllers
 
             _context.Add(viewModel.Producto);
             await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Producto {Nombre} creado por {Usuario}",
+                viewModel.Producto.Nombre, User.Identity?.Name);
+
             TempData["SuccessMessage"] = $"Producto «{viewModel.Producto.Nombre}» creado exitosamente.";
             return RedirectToAction(nameof(Index));
         }
@@ -152,6 +156,10 @@ namespace MacrobioticaLaBendicion.Controllers
                 }
 
                 await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Producto {Nombre} editado por {Usuario}",
+                    productoDb.Nombre, User.Identity?.Name);
+
                 TempData["SuccessMessage"] = $"Producto «{productoDb.Nombre}» actualizado exitosamente.";
             }
             catch (DbUpdateConcurrencyException)
@@ -197,6 +205,10 @@ namespace MacrobioticaLaBendicion.Controllers
                     producto.Activo              = false;
                     _context.Productos.Update(producto);
                     await _context.SaveChangesAsync();
+
+                    _logger.LogInformation("Producto {Nombre} desactivado (soft delete) por {Usuario}",
+                        producto.Nombre, User.Identity?.Name);
+
                     TempData["SuccessMessage"] = "Producto desactivado (tiene pedidos asociados).";
                 }
                 else
@@ -204,6 +216,10 @@ namespace MacrobioticaLaBendicion.Controllers
                     BorrarImagen(producto.Url_Imagen);
                     _context.Productos.Remove(producto);
                     await _context.SaveChangesAsync();
+
+                    _logger.LogInformation("Producto {Nombre} eliminado por {Usuario}",
+                        producto.Nombre, User.Identity?.Name);
+
                     TempData["SuccessMessage"] = "Producto eliminado exitosamente.";
                 }
             }

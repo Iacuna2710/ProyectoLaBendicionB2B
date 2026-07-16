@@ -10,7 +10,7 @@
     var roles = usuarioActual is null
         ? new List<string>()
         : await UserManager.GetRolesAsync(usuarioActual);
-    <span class="text-dark small">
+    <span class="text-body small">
         <i class="bi bi-person-circle me-1"></i> @UserManager.GetUserName(User)
         @if (roles.Count > 0)
         {

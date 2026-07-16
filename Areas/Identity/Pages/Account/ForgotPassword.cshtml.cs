@@ -35,6 +35,11 @@ namespace MacrobioticaLaBendicion.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        // Como el proyecto no tiene SMTP real, el link de reseteo se pasa
+        // a la pantalla de confirmación para poder probar el flujo completo.
+        [TempData]
+        public string LinkDeDesarrollo { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -76,6 +81,7 @@ namespace MacrobioticaLaBendicion.Areas.Identity.Pages.Account
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                LinkDeDesarrollo = callbackUrl;
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 

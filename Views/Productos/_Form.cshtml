@@ -6,7 +6,14 @@
         <div class="col-12">
             <div class="alert alert-warning d-flex align-items-center gap-2 mb-0">
                 <i class="bi bi-exclamation-triangle-fill"></i>
-                <span>No hay categorías. Crea una en <a asp-controller="Categorias" asp-action="Create">Categorías</a> primero.</span>
+                @if (User.IsInRole("Admin"))
+                {
+                    <span>No hay categorías. Crea una en <a asp-controller="Categorias" asp-action="Create">Categorías</a> primero.</span>
+                }
+                else
+                {
+                    <span>No hay categorías registradas. Pídele a un Admin que cree una primero.</span>
+                }
             </div>
         </div>
     }

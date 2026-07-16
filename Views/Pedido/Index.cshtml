@@ -6,9 +6,12 @@
         <h1>Pedidos</h1>
         <p class="text-muted mb-0">@Model.TotalItems pedidos </p>
     </div>
-    <a asp-action="Create" class="btn btn-primary rounded-pill">
-        <i class="bi bi-plus-lg me-1"></i> Nuevo pedido
-    </a>
+    @if (User.IsInRole("Admin") || User.IsInRole("Ventas"))
+    {
+        <a asp-action="Create" class="btn btn-primary rounded-pill">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo pedido
+        </a>
+    }
 </div>
 
 <div class="card-modern">
@@ -31,12 +34,20 @@
                 }
                 @foreach (var p in Model.Pedidos)
                 {
+                    var colorEstado = p.Estado switch
+                    {
+                        "Confirmado" => "bg-primary",
+                        "Enviado"    => "bg-info",
+                        "Entregado"  => "bg-success",
+                        "Cancelado"  => "bg-danger",
+                        _            => "bg-secondary"
+                    };
                     <tr>
                         <td>@p.id_Pedido</td>
                         <td class="fw-semibold">@p.Cliente?.Nombre</td>
                         <td>@p.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>₡@p.Total.ToString("N2")</td>
-                        <td><span class="badge bg-success">@p.Estado</span></td>
+                        <td><span class="badge @colorEstado">@p.Estado</span></td>
                         <td class="text-end">
                             <a asp-action="Details" asp-route-id="@p.id_Pedido" class="btn btn-sm btn-outline-secondary">
                                 <i class="bi bi-eye"></i> Ver

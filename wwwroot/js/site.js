@@ -14,14 +14,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
+        function actualizarBotonTema(tema) {
+            const icon = themeToggle.querySelector('i');
+            icon.className = tema === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+            themeToggle.innerHTML = icon.outerHTML + ' ' + (tema === 'dark' ? 'Modo claro' : 'Modo oscuro');
+        }
+
+        // El tema ya se aplicó en el <head> (antes de pintar la página);
+        // aquí solo se sincroniza el texto/ícono del botón con lo que quedó activo.
+        actualizarBotonTema(document.documentElement.getAttribute('data-bs-theme'));
+
         themeToggle.addEventListener('click', function () {
             const html = document.documentElement;
-            const current = html.getAttribute('data-bs-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
+            const next = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-bs-theme', next);
-            const icon = this.querySelector('i');
-            icon.className = next === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
-            this.innerHTML = icon.outerHTML + ' ' + (next === 'dark' ? 'Modo claro' : 'Modo oscuro');
+            localStorage.setItem('tema', next);
+            actualizarBotonTema(next);
         });
     }
 

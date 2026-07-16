@@ -21,11 +21,16 @@ namespace MacrobioticaLaBendicion.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -129,7 +134,13 @@ namespace MacrobioticaLaBendicion.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    // Se distingue el mensaje a propósito (usabilidad para el proyecto);
+                    // en un sistema en producción real esto normalmente se evita porque
+                    // revela qué correos están registrados (ataque de enumeración de usuarios).
+                    var usuarioExiste = await _userManager.FindByEmailAsync(Input.Email) is not null;
+                    ModelState.AddModelError(string.Empty, usuarioExiste
+                        ? "Contraseña incorrecta."
+                        : "No existe una cuenta registrada con ese correo.");
                     return Page();
                 }
             }
