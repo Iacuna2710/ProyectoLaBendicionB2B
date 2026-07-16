@@ -42,6 +42,16 @@ namespace MacrobioticaLaBendicion.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        // Acción solo para la demo: muestra la vista de error 500 directamente,
+        // sin necesitar una excepción real ni correr en modo Producción
+        // (UseExceptionHandler solo se activa fuera de Development).
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult ProbarError500()
+        {
+            Response.StatusCode = 500;
+            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
         // Punto de entrada al que UseStatusCodePagesWithReExecute redirige
         // cuando el servidor responde con un código de error (404, 403, etc.)
         // Nota: se llama "ManejarCodigoEstado" (y no "StatusCode") para no

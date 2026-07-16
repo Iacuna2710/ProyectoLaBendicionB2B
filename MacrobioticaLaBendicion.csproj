@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Documentos\" />
+    <Folder Include="Documentos\Avance2\" />
     <Folder Include="Views\Pedido\" />
   </ItemGroup>
 

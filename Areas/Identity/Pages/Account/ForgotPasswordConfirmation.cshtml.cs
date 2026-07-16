@@ -3,6 +3,7 @@
 #nullable disable
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MacrobioticaLaBendicion.Areas.Identity.Pages.Account
@@ -14,10 +15,11 @@ namespace MacrobioticaLaBendicion.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ForgotPasswordConfirmation : PageModel
     {
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        // Como el proyecto no tiene SMTP real, el link de reseteo se muestra
+        // aquí directamente (solo para poder probar el flujo en la demo).
+        [TempData]
+        public string LinkDeDesarrollo { get; set; }
+
         public void OnGet()
         {
         }

@@ -41,6 +41,7 @@ namespace MacrobioticaLaBendicion.ViewModels.Api
         public int Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public decimal Descuento { get; set; }
+        public decimal DescuentoMonto { get; set; }
         public decimal ImpuestoPorc { get; set; }
         public decimal TotalLinea { get; set; }
         public int StockDisponible { get; set; }
