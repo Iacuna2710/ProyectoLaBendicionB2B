@@ -4,7 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] — Macrobiotica La Bendición</title>
-    
+
+    <script>
+        // Aplica el tema guardado ANTES de pintar la página, para que no
+        // se vea un parpadeo de modo claro al navegar entre pantallas.
+        (function () {
+            var tema = localStorage.getItem('tema') || 'light';
+            document.documentElement.setAttribute('data-bs-theme', tema);
+        })();
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true">

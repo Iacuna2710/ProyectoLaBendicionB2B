@@ -34,10 +34,11 @@ namespace MacrobioticaLaBendicion.Services
                 var cantidad  = Math.Max(0, linea.Cantidad);
                 var descuento = Math.Clamp(linea.Descuento, 0, 100);
 
-                var baseLinea     = producto.Precio * cantidad;
-                var baseConDesc   = baseLinea * (1 - descuento / 100m);
-                var impuestoLinea = baseConDesc * (producto.ImpuestoPorc / 100m);
-                var totalLinea    = baseConDesc + impuestoLinea;
+                var baseLinea      = producto.Precio * cantidad;
+                var descuentoMonto = baseLinea * (descuento / 100m);
+                var baseConDesc    = baseLinea - descuentoMonto;
+                var impuestoLinea  = baseConDesc * (producto.ImpuestoPorc / 100m);
+                var totalLinea     = baseConDesc + impuestoLinea;
 
                 respuesta.Lineas.Add(new CalcularLineaResultDto
                 {
@@ -46,6 +47,7 @@ namespace MacrobioticaLaBendicion.Services
                     Cantidad          = cantidad,
                     PrecioUnitario    = producto.Precio,
                     Descuento         = descuento,
+                    DescuentoMonto    = Math.Round(descuentoMonto, 2),
                     ImpuestoPorc      = producto.ImpuestoPorc,
                     TotalLinea        = Math.Round(totalLinea, 2),
                     StockDisponible   = producto.Stock,

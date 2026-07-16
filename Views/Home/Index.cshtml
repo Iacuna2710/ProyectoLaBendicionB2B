@@ -47,7 +47,7 @@
             <div class="d-flex gap-3 flex-wrap">
                 @if (User.IsInRole("Admin"))
                 {
-                    <a asp-controller="Productos" asp-action="Create" class="btn btn-primary rounded-pill">
+                    <a asp-controller="Productos" asp-action="Create" class="btn btn-outline-primary rounded-pill">
                         <i class="bi bi-plus-circle me-1"></i> Nuevo producto
                     </a>
                     <a asp-controller="Categorias" asp-action="Create" class="btn btn-outline-primary rounded-pill">
@@ -70,3 +70,19 @@
         </div>
     </div>
 </div>
+
+@if (User.IsInRole("Admin"))
+{
+    <div class="row g-4 mt-1">
+        <div class="col-lg-12">
+            <div class="card-modern p-4">
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-tools text-muted me-2"></i>Herramientas de prueba
+                </h5>
+                <a asp-action="ProbarError500" class="btn btn-outline-danger rounded-pill">
+                    <i class="bi bi-bug me-1"></i> Probar pantalla de error 500
+                </a>
+            </div>
+        </div>
+    </div>
+}

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
 using MacrobioticaLaBendicion.Models;
@@ -24,6 +25,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 // ── MVC + servicios de dominio ──────────────────────────────────────────────
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<CalculoPedidoService>();
+
+// No hay SMTP configurado: reemplaza el envío de correo (por defecto no hace
+// nada) para que "Olvidé mi contraseña" se pueda probar de verdad.
+builder.Services.AddTransient<IEmailSender, ConsoleEmailSender>();
 
 var app = builder.Build();
 

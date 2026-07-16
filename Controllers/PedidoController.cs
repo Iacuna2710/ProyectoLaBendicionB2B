@@ -166,6 +166,38 @@ namespace MacrobioticaLaBendicion.Controllers
             }
         }
 
+        // Estados válidos a los que un pedido puede pasar tras confirmarse.
+        private static readonly string[] EstadosDisponibles =
+            ["Confirmado", "Enviado", "Entregado", "Cancelado"];
+
+        // POST: Pedido/CambiarEstado/5 — solo Admin puede mover el estado de un pedido
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CambiarEstado(int id, string nuevoEstado)
+        {
+            if (!EstadosDisponibles.Contains(nuevoEstado))
+            {
+                TempData["ErrorMessage"] = "Estado inválido.";
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
+            var pedido = await _context.Pedidos.FindAsync(id);
+            if (pedido is null)
+                return NotFound();
+
+            var estadoAnterior = pedido.Estado;
+            pedido.Estado = nuevoEstado;
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation(
+                "Pedido {PedidoId} cambió de estado {Anterior} a {Nuevo}, por {Usuario}",
+                pedido.id_Pedido, estadoAnterior, nuevoEstado, User.Identity?.Name);
+
+            TempData["SuccessMessage"] = $"Pedido #{pedido.id_Pedido} actualizado a «{nuevoEstado}».";
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
         // ── Helper: arma el ViewModel con clientes, categorías y productos ────
         private async Task<PedidoFormViewModel> BuildFormAsync(PedidoFormViewModel? existente = null)
         {

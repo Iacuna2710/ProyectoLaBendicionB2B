@@ -139,7 +139,7 @@
 
         if (lineas.length === 0) {
             tablaLineas.innerHTML =
-                '<tr id="filaVacia"><td colspan="6" class="text-center py-4 text-muted">Aún no ha agregado productos al pedido.</td></tr>';
+                '<tr id="filaVacia"><td colspan="7" class="text-center py-4 text-muted">Aún no ha agregado productos al pedido.</td></tr>';
             btnConfirmar.disabled = true;
             return;
         }
@@ -161,6 +161,7 @@
                     <input type="number" min="0" max="100" value="${l.descuento}"
                            class="form-control form-control-sm input-descuento" data-producto-id="${l.productoId}" />
                 </td>
+                <td class="descuento-monto text-muted">-</td>
                 <td class="total-linea">-</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-outline-danger btn-quitar" data-producto-id="${l.productoId}">
@@ -237,6 +238,9 @@
 
                 if (fila) {
                     fila.querySelector(".precio-unit").textContent = formatoColones(r.precioUnitario);
+                    fila.querySelector(".descuento-monto").textContent = r.descuentoMonto > 0
+                        ? "-" + formatoColones(r.descuentoMonto)
+                        : formatoColones(0);
                     fila.querySelector(".total-linea").textContent = formatoColones(r.totalLinea);
                     fila.classList.toggle("table-danger", r.stockInsuficiente);
                 }
