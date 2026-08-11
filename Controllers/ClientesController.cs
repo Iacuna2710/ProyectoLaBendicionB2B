@@ -1,8 +1,10 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
 using MacrobioticaLaBendicion.Models;
+using MacrobioticaLaBendicion.Services;
 using MacrobioticaLaBendicion.ViewModels;
 
 namespace MacrobioticaLaBendicion.Controllers
@@ -12,11 +14,17 @@ namespace MacrobioticaLaBendicion.Controllers
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly BitacoraService _bitacora;
 
-        public ClientesController(ApplicationDbContext context)
+        public ClientesController(ApplicationDbContext context, BitacoraService bitacora)
         {
-            _context = context;
+            _context  = context;
+            _bitacora = bitacora;
         }
+
+        // ── Helper: id del usuario autenticado, para la bitácora ────────────────
+        private string UsuarioIdActual() =>
+            User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "?";
 
         // GET: Clientes
         public async Task<IActionResult> Index(string? filtroBusqueda, int pagina = 1)
@@ -86,6 +94,8 @@ namespace MacrobioticaLaBendicion.Controllers
 
             _context.Add(cliente);
             await _context.SaveChangesAsync();
+            await _bitacora.RegistrarAsync(UsuarioIdActual(), User.Identity?.Name ?? "?", "Crear", "Cliente",
+                cliente.id_Cliente, cliente.Nombre);
             TempData["SuccessMessage"] = "Cliente registrado exitosamente.";
             return RedirectToAction(nameof(Index));
         }
@@ -134,6 +144,8 @@ namespace MacrobioticaLaBendicion.Controllers
                 clienteDb.Direccion           = cliente.Direccion;
 
                 await _context.SaveChangesAsync();
+                await _bitacora.RegistrarAsync(UsuarioIdActual(), User.Identity?.Name ?? "?", "Editar", "Cliente",
+                    clienteDb.id_Cliente, clienteDb.Nombre);
                 TempData["SuccessMessage"] = "Cliente actualizado exitosamente.";
             }
             catch (DbUpdateConcurrencyException)
@@ -179,6 +191,8 @@ namespace MacrobioticaLaBendicion.Controllers
 
                 _context.Clientes.Remove(cliente);
                 await _context.SaveChangesAsync();
+                await _bitacora.RegistrarAsync(UsuarioIdActual(), User.Identity?.Name ?? "?", "Eliminar", "Cliente",
+                    cliente.id_Cliente, cliente.Nombre);
                 TempData["SuccessMessage"] = "Cliente eliminado exitosamente.";
             }
 

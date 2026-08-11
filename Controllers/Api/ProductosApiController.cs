@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MacrobioticaLaBendicion.Data;
+using MacrobioticaLaBendicion.Services;
 using MacrobioticaLaBendicion.ViewModels.Api;
 
 namespace MacrobioticaLaBendicion.Controllers.Api
@@ -12,10 +13,21 @@ namespace MacrobioticaLaBendicion.Controllers.Api
     public class ProductosApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ProductoListaService _lista;
 
-        public ProductosApiController(ApplicationDbContext context)
+        public ProductosApiController(ApplicationDbContext context, ProductoListaService lista)
         {
             _context = context;
+            _lista = lista;
+        }
+
+        // GET /api/productos?filtroNombre=&filtroCategoria=&pagina=
+        // Alimenta la vista de React en Productos/Index (filtros y paginación sin recargar la página).
+        [HttpGet]
+        public async Task<ActionResult<ProductoListaResponse>> Listar(
+            [FromQuery] string? filtroNombre, [FromQuery] int? filtroCategoria, [FromQuery] int pagina = 1)
+        {
+            return Ok(await _lista.ListarAsync(filtroNombre, filtroCategoria, pagina));
         }
 
         // GET /api/productos/buscar?q=jabon

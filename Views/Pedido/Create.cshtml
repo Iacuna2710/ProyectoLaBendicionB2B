@@ -23,119 +23,35 @@
     </div>
 }
 
+@{
+    // Ojo: Json.Serialize() de Razor devuelve IHtmlContent (Razor no le
+    // escapa las comillas al interpolarlo), lo que rompería este atributo
+    // HTML a la mitad. System.Text.Json.JsonSerializer.Serialize devuelve
+    // un string plano, que Razor sí escapa correctamente en este contexto.
+    var clientesJson = System.Text.Json.JsonSerializer.Serialize(
+        Model.Clientes.Select(c => new { value = c.Value, text = c.Text }));
+    var categoriasJson = System.Text.Json.JsonSerializer.Serialize(
+        Model.Categorias.Select(c => new { value = c.Value, text = c.Text }));
+    var productosJson = System.Text.Json.JsonSerializer.Serialize(Model.Productos.Select(p => new
+    {
+        id = p.Id,
+        nombre = p.Nombre,
+        categoriaId = p.CategoriaId,
+        precio = p.Precio,
+        stock = p.Stock
+    }));
+}
+
+@* El formulario y el antiforgery token siguen siendo de Razor/MVC tal cual;
+   React solo controla la parte interactiva que va dentro (buscador, tabla,
+   totales) — al confirmar, es un POST normal a PedidoController.Create. *@
 <form asp-action="Create" method="post" id="formPedido">
-    <div class="card-modern mb-4 p-3">
-        <div class="row g-3">
-            <div class="col-md-12">
-                <label class="form-label small text-muted">Cliente</label>
-                <select name="id_Cliente" id="selectCliente" class="form-select">
-                    <option value="">— Seleccione un cliente —</option>
-                    @foreach (var c in Model.Clientes)
-                    {
-                        <option value="@c.Value">@c.Text</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-        <hr class="my-3" />
-
-        <div class="row g-3 align-items-end">
-            <div class="col-md-4">
-                <label class="form-label small text-muted">Categoría</label>
-                <select id="selectCategoria" class="form-select">
-                    <option value="">— Todas —</option>
-                    @foreach (var c in Model.Categorias)
-                    {
-                        <option value="@c.Value">@c.Text</option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-5">
-                <label class="form-label small text-muted">Producto</label>
-                <select id="selectProducto" class="form-select">
-                    <option value="">— Seleccione un producto —</option>
-                    @foreach (var p in Model.Productos)
-                    {
-                        <option value="@p.Id"
-                                data-categoria="@p.CategoriaId"
-                                data-nombre="@p.Nombre"
-                                data-precio="@p.Precio.ToString(System.Globalization.CultureInfo.InvariantCulture)"
-                                data-stock="@p.Stock">
-                            @p.Nombre (₡@p.Precio.ToString("N2") · stock @p.Stock)
-                        </option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-3">
-                <button type="button" id="btnAgregarProducto" class="btn btn-outline-primary w-100">
-                    <i class="bi bi-plus-lg me-1"></i> Agregar
-                </button>
-            </div>
-        </div>
-
-        <div class="row g-3 mt-1">
-            <div class="col-12">
-                <label class="form-label small text-muted">O buscar por nombre</label>
-                <div class="position-relative">
-                    <input type="text" id="buscarProducto" class="form-control"
-                           placeholder="Escriba nombre del producto..." autocomplete="off" />
-                    <div id="resultadosBusqueda" class="list-group position-absolute w-100 shadow-sm"
-                         style="z-index:1000; display:none;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card-modern">
-        <div class="table-responsive">
-            <table class="table table-modern align-middle mb-0">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th style="width:110px;">Cantidad</th>
-                        <th style="width:130px;">Precio unit.</th>
-                        <th style="width:110px;">Descuento %</th>
-                        <th style="width:130px;">Descuento (₡)</th>
-                        <th style="width:130px;">Total línea</th>
-                        <th style="width:50px;"></th>
-                    </tr>
-                </thead>
-                <tbody id="tablaLineas">
-                    <tr id="filaVacia">
-                        <td colspan="7" class="text-center py-4 text-muted">
-                            Aún no ha agregado productos al pedido.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="d-flex justify-content-end gap-4 p-3 border-top">
-            <div class="text-end">
-                <div class="small text-muted">Subtotal</div>
-                <div class="fw-semibold" id="lblSubtotal">₡0.00</div>
-            </div>
-            <div class="text-end">
-                <div class="small text-muted">Impuestos</div>
-                <div class="fw-semibold" id="lblImpuestos">₡0.00</div>
-            </div>
-            <div class="text-end">
-                <div class="small text-muted">Total</div>
-                <div class="fs-5 fw-bold text-success" id="lblTotal">₡0.00</div>
-            </div>
-        </div>
-    </div>
-
-    @* Aquí el JS inyecta Lineas[i].id_Producto / Cantidad / Descuento como inputs ocultos antes de enviar *@
-    <div id="hiddenInputsLineas"></div>
-
-    <div class="mt-3 text-end">
-        <button type="submit" class="btn btn-primary rounded-pill px-4" id="btnConfirmar" disabled>
-            <i class="bi bi-check-lg me-1"></i> Confirmar pedido
-        </button>
-    </div>
+    <div id="pedido-root"
+         data-clientes="@clientesJson"
+         data-categorias="@categoriasJson"
+         data-productos="@productosJson"></div>
 </form>
 
 @section Scripts {
-    <script src="~/js/pedido-ajax.js"></script>
+    <script type="module" src="~/dist/pedido/main.js" asp-append-version="true"></script>
 }

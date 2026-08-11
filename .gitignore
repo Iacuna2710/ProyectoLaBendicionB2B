@@ -285,6 +285,12 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 
+# Bundles generados por Vite (ClientApp) — se regeneran con `npm run build`
+wwwroot/dist/
+
+# Configuración local de Claude Code (dev server launch)
+.claude/
+
 # Visual Studio 6 build log
 *.plg
 

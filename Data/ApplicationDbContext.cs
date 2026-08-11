@@ -18,6 +18,7 @@ namespace MacrobioticaLaBendicion.Data
         public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<Pedido> Pedidos { get; set; }
         public virtual DbSet<PedidoDetalle> PedidoDetalles { get; set; }
+        public virtual DbSet<Bitacora> Bitacoras { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +46,7 @@ namespace MacrobioticaLaBendicion.Data
                 entity.Property(e => e.Precio).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.ImpuestoPorc).HasColumnType("decimal(5,2)");
                 entity.Property(e => e.Activo).HasDefaultValue(true);
+                entity.Property(e => e.Url_Thumbnail).HasMaxLength(300);
 
                 entity.HasOne(p => p.Categoria)
                       .WithMany(c => c.Productos)
@@ -103,6 +105,20 @@ namespace MacrobioticaLaBendicion.Data
                       .WithMany(p => p.PedidoDetalles)
                       .HasForeignKey(d => d.id_Producto)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Bitacora>(entity =>
+            {
+                entity.HasKey(e => e.id_Bitacora).HasName("PK_Bitacoras");
+                entity.Property(e => e.UsuarioId).HasMaxLength(450);
+                entity.Property(e => e.UsuarioNombre).HasMaxLength(200);
+                entity.Property(e => e.Accion).HasMaxLength(50);
+                entity.Property(e => e.Entidad).HasMaxLength(50);
+                entity.Property(e => e.Detalle).HasMaxLength(500);
+                entity.Property(e => e.Fecha).HasColumnType("datetime");
+
+                entity.HasIndex(e => e.Fecha);
+                entity.HasIndex(e => e.Entidad);
             });
 
             OnModelCreatingPartial(modelBuilder);

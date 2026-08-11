@@ -61,6 +61,20 @@
                         <span>Pedidos</span>
                     </a>
                 }
+                @if (User.IsInRole("Admin") || User.IsInRole("Ventas"))
+                {
+                    <a asp-controller="Reportes" asp-action="PorFecha" class="sidebar-link@(ViewContext.RouteData.Values["controller"]?.ToString() == "Reportes" ? " active" : "")">
+                        <i class="bi bi-graph-up"></i>
+                        <span>Reportes</span>
+                    </a>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Bitacora" asp-action="Index" class="sidebar-link@(ViewContext.RouteData.Values["controller"]?.ToString() == "Bitacora" ? " active" : "")">
+                        <i class="bi bi-clipboard-data-fill"></i>
+                        <span>Bitácora</span>
+                    </a>
+                }
             </nav>
             <div class="sidebar-footer">
                 <button class="btn btn-sm btn-outline-secondary w-100" id="themeToggle">

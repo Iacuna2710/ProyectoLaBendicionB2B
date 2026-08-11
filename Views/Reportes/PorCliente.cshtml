@@ -1,0 +1,83 @@
+@model ReporteVentaClienteViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "Ventas por cliente";
+    var clientesItems = new SelectList(Model.Clientes, "Value", "Text", Model.ClienteId?.ToString());
+}
+
+<div class="page-header">
+    <div>
+        <h1>Ventas por cliente</h1>
+        <p class="text-muted mb-0">@Model.TotalPedidos pedidos · ₡@Model.TotalGeneral.ToString("N2") en total</p>
+    </div>
+    <a asp-action="PorFecha" class="btn btn-outline-secondary rounded-pill">
+        <i class="bi bi-calendar3 me-1"></i> Ver por fecha
+    </a>
+</div>
+
+<div class="card-modern mb-4 p-3">
+    <form asp-action="PorCliente" method="get" class="row g-2 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label small text-muted">Cliente</label>
+            <select name="clienteId" class="form-select" asp-items="clientesItems">
+                <option value="">Todos</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small text-muted">Desde</label>
+            <input type="date" name="desde" value="@Model.Desde?.ToString("yyyy-MM-dd")" class="form-control">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small text-muted">Hasta</label>
+            <input type="date" name="hasta" value="@Model.Hasta?.ToString("yyyy-MM-dd")" class="form-control">
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary flex-grow-1"><i class="bi bi-funnel me-1"></i> Filtrar</button>
+            <a asp-action="PorCliente" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i></a>
+        </div>
+    </form>
+</div>
+
+<div class="card-modern">
+    <div class="table-responsive">
+        <table class="table table-modern">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th class="text-end">Pedidos</th>
+                    <th class="text-end">Subtotal</th>
+                    <th class="text-end">Impuestos</th>
+                    <th class="text-end">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Filas.Any())
+                {
+                    <tr><td colspan="5" class="text-center py-4 text-muted">No hay ventas que coincidan con el filtro.</td></tr>
+                }
+                @foreach (var fila in Model.Filas)
+                {
+                    <tr>
+                        <td class="fw-semibold">@fila.ClienteNombre</td>
+                        <td class="text-end">@fila.CantidadPedidos</td>
+                        <td class="text-end">₡@fila.Subtotal.ToString("N2")</td>
+                        <td class="text-end">₡@fila.Impuestos.ToString("N2")</td>
+                        <td class="text-end fw-semibold">₡@fila.Total.ToString("N2")</td>
+                    </tr>
+                }
+            </tbody>
+            @if (Model.Filas.Any())
+            {
+                <tfoot>
+                    <tr class="fw-bold border-top">
+                        <td>Total</td>
+                        <td class="text-end">@Model.TotalPedidos</td>
+                        <td class="text-end">₡@Model.Filas.Sum(f => f.Subtotal).ToString("N2")</td>
+                        <td class="text-end">₡@Model.Filas.Sum(f => f.Impuestos).ToString("N2")</td>
+                        <td class="text-end">₡@Model.TotalGeneral.ToString("N2")</td>
+                    </tr>
+                </tfoot>
+            }
+        </table>
+    </div>
+</div>
