@@ -19,15 +19,21 @@ namespace MacrobioticaLaBendicion.Controllers
         private readonly ApplicationDbContext _context;
         private readonly CalculoPedidoService _calculo;
         private readonly ILogger<PedidoController> _logger;
+        private readonly BitacoraService _bitacora;
+        private readonly PedidoExportService _export;
 
         public PedidoController(
             ApplicationDbContext context,
             CalculoPedidoService calculo,
-            ILogger<PedidoController> logger)
+            ILogger<PedidoController> logger,
+            BitacoraService bitacora,
+            PedidoExportService export)
         {
-            _context = context;
-            _calculo = calculo;
-            _logger  = logger;
+            _context  = context;
+            _calculo  = calculo;
+            _logger   = logger;
+            _bitacora = bitacora;
+            _export   = export;
         }
 
         // GET: Pedido
@@ -147,7 +153,12 @@ namespace MacrobioticaLaBendicion.Controllers
                 }
 
                 _context.Pedidos.Add(pedido);
+                await _context.SaveChangesAsync(); // asigna pedido.id_Pedido antes de registrar la bitácora
+
+                _bitacora.Agregar(usuarioId, User.Identity?.Name ?? "?", "ConfirmarPedido", "Pedido",
+                    pedido.id_Pedido, $"Cliente {pedido.id_Cliente}, Total ₡{pedido.Total:N2}");
                 await _context.SaveChangesAsync();
+
                 await transaction.CommitAsync();
 
                 _logger.LogInformation(
@@ -165,6 +176,36 @@ namespace MacrobioticaLaBendicion.Controllers
                 return View(await BuildFormAsync(viewModel));
             }
         }
+
+        // GET: Pedido/ExportarPdf/5
+        public async Task<IActionResult> ExportarPdf(int id)
+        {
+            var pedido = await CargarPedidoParaExportarAsync(id);
+            if (pedido is null)
+                return NotFound();
+
+            var pdf = _export.GenerarPdf(pedido);
+            return File(pdf, "application/pdf", $"Pedido-{pedido.id_Pedido}.pdf");
+        }
+
+        // GET: Pedido/ExportarExcel/5
+        public async Task<IActionResult> ExportarExcel(int id)
+        {
+            var pedido = await CargarPedidoParaExportarAsync(id);
+            if (pedido is null)
+                return NotFound();
+
+            var excel = _export.GenerarExcel(pedido);
+            return File(excel,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                $"Pedido-{pedido.id_Pedido}.xlsx");
+        }
+
+        private async Task<Pedido?> CargarPedidoParaExportarAsync(int id) =>
+            await _context.Pedidos
+                .Include(p => p.Cliente)
+                .Include(p => p.Detalles).ThenInclude(d => d.Producto)
+                .FirstOrDefaultAsync(p => p.id_Pedido == id);
 
         // Estados válidos a los que un pedido puede pasar tras confirmarse.
         private static readonly string[] EstadosDisponibles =
@@ -189,6 +230,10 @@ namespace MacrobioticaLaBendicion.Controllers
             var estadoAnterior = pedido.Estado;
             pedido.Estado = nuevoEstado;
             await _context.SaveChangesAsync();
+
+            await _bitacora.RegistrarAsync(
+                User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "?", User.Identity?.Name ?? "?",
+                "CambiarEstado", "Pedido", pedido.id_Pedido, $"{estadoAnterior} -> {nuevoEstado}");
 
             _logger.LogInformation(
                 "Pedido {PedidoId} cambió de estado {Anterior} a {Nuevo}, por {Usuario}",

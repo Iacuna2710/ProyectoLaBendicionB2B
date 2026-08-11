@@ -12,12 +12,10 @@ namespace MacrobioticaLaBendicion.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IConfiguration _configuration;
 
-        public HomeController(ApplicationDbContext context, IConfiguration configuration)
+        public HomeController(ApplicationDbContext context)
         {
             _context = context;
-            _configuration = configuration;
         }
 
         // El dashboard muestra estadísticas del negocio: requiere sesión iniciada
@@ -30,8 +28,7 @@ namespace MacrobioticaLaBendicion.Controllers
                 TotalProductos = await _context.Productos.CountAsync(),
                 TotalClientes = await _context.Clientes.CountAsync(),
                 TotalPedidos = await _context.Pedidos.CountAsync(),
-                TotalCategorias = await _context.Categorias.CountAsync(),
-                ConnectionString = _configuration.GetConnectionString("MacrobioticaDb") ?? "—"
+                TotalCategorias = await _context.Categorias.CountAsync()
             };
             return View(vm);
         }

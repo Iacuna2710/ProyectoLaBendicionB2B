@@ -36,6 +36,9 @@ namespace MacrobioticaLaBendicion.Models
         [Display(Name = "Imagen")]
         public string? Url_Imagen { get; set; }
 
+        [Display(Name = "Miniatura")]
+        public string? Url_Thumbnail { get; set; }
+
         [Display(Name = "Activo")]
         public bool Activo { get; set; } = true;
 
