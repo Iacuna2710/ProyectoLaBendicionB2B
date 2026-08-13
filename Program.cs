@@ -43,6 +43,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
     await SeedData.InicializarAsync(scope.ServiceProvider);
+    await SeedData.SeedDatosPruebaAsync(scope.ServiceProvider);
 }
 
 // ── Middleware pipeline ────────────────────────────────────────────────────
